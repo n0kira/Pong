@@ -10,7 +10,8 @@ public class Main {
         myFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         myPanel panel = new myPanel();
-        Logic logic = new Logic(panel);
+        Data data = new Data();
+        Logic logic = new Logic(panel, data);
 
         myFrame.add(panel);
         myFrame.setResizable(false);

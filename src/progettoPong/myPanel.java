@@ -7,6 +7,9 @@ public class myPanel extends JPanel {
     int Pl1X = 100, Pl1Y = 540;
     int Pl2X = 1820, Pl2Y = 540;
 
+    int ballSize = 30;
+    int ballX = 960 - ballSize / 2, ballY = 540;
+
     int sizeX = 30, sizeY = 60;
 
     public myPanel() {
@@ -23,5 +26,10 @@ public class myPanel extends JPanel {
         g.setColor(Color.RED);
         g.fillRect(Pl2X, Pl2Y, sizeX, sizeY);
 
+        g.setColor(Color.WHITE);
+        g.fillOval(ballX, ballY, ballSize, ballSize);
+
+        g.setColor(Color.WHITE);
+        g.drawLine(getWidth() / 2, 0, getWidth() / 2, getHeight());
     }
 }
