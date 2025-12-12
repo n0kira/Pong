@@ -7,12 +7,13 @@ public class Logic {
 
     private Data data;
 
-    private double ballSpeedX = 2;
-    private double ballSpeedY = 2;
-    private int playerSpeed = 3;
+    // Velocità dichiarate come double (per l'incremento di 0.5)
+    private double ballSpeedX = 3.0;
+    private double ballSpeedY = 3.0;
+    private int playerSpeed = 5;
 
     private final double SPEED_INCREMENT = 0.5;
-    private final int MAX_Y_SPEED = 4;
+    private final int MAX_VERTICAL_SPEED = 4; // Massima velocità Y (per l'angolo)
 
     public Logic(myPanel panel, Data data) {
         this.data = data;
@@ -33,9 +34,11 @@ public class Logic {
     private void updateGame(myPanel panel) {
         int panelHeight = panel.getHeight();
         int panelWidth = panel.getWidth();
-        int playerSize = panel.sizeX;
 
-        if (data.isL1Down && panel.Pl1Y < panelHeight - playerSize * 2) {
+        // --- Movimento Giocatori (Correzione dei limiti) ---
+        // Utilizza panel.sizeY per l'altezza della racchetta
+
+        if (data.isL1Down && panel.Pl1Y < panelHeight - panel.sizeY) {
             panel.Pl1Y += playerSpeed;
         }
 
@@ -43,7 +46,7 @@ public class Logic {
             panel.Pl1Y -= playerSpeed;
         }
 
-        if (data.isL2Down && panel.Pl2Y < panelHeight - playerSize * 2) {
+        if (data.isL2Down && panel.Pl2Y < panelHeight - panel.sizeY) {
             panel.Pl2Y += playerSpeed;
         }
 
@@ -51,11 +54,11 @@ public class Logic {
             panel.Pl2Y -= playerSpeed;
         }
 
-        //movimento palla
+        // --- Movimento Palla ---
         panel.ballX += ballSpeedX;
         panel.ballY += ballSpeedY;
 
-        //collisione con i muri superiori e inferiori
+        // --- Collisione con Muri Superiori e Inferiori ---
         if (panel.ballY <= 0 || panel.ballY >= panelHeight - panel.ballSize) {
             ballSpeedY = - ballSpeedY;
         }
@@ -65,70 +68,61 @@ public class Logic {
         Rectangle p1Bounds = new Rectangle(panel.Pl1X, panel.Pl1Y, panel.sizeX, panel.sizeY);
         Rectangle p2Bounds = new Rectangle(panel.Pl2X, panel.Pl2Y, panel.sizeX, panel.sizeY);
 
+        // --- Gestione della Collisione con i Giocatori (LOGICA COMPLETA) ---
+
         if (ballBounds.intersects(p1Bounds) || ballBounds.intersects(p2Bounds)) {
 
+            // 1. Inversione e Aumento di Velocità (Asse X)
+
             ballSpeedX = - ballSpeedX;
 
-            if(ballSpeedX > 0){
+            if (ballSpeedX > 0) {
                 ballSpeedX += SPEED_INCREMENT;
-            }else{
+            } else {
                 ballSpeedX -= SPEED_INCREMENT;
             }
-        }
 
-        if (ballBounds.intersects(p2Bounds)) {
+            // 2. Calcolo dell'Angolo di Rimbalzo (Asse Y)
 
-        }
+            // Determina quale giocatore è stato colpito
+            int playerY = ballBounds.intersects(p1Bounds) ? panel.Pl1Y : panel.Pl2Y;
 
-        if (panel.ballX < 0 || panel.ballX > panelWidth) {
-            panel.ballX = panelWidth / 2;
-            panel.ballY = panelHeight / 2;
-            ballSpeedX = - ballSpeedX;
-        }
-    }
-}
-
-// tramite un offset che mi identifica dove la pallina ha colpito, tramite il
-//nuovo valore ricaviamo la nuova velocità vrticale
-// l'angolo di rimbalzo è calcolato implicitamente dal rapporto tra la velocità angolare e la velocità orizzontale
-// la direzione non in angolo in gradi ma in vettori di velocità
-/*
-* nt playerY = ballBounds.intersects(p1Bounds) ? panel.Pl1Y : panel.Pl2Y;
-
-            // Calcola i centri
+            // Calcola i centri (usa 2.0 per forzare la divisione in double)
             double playerCenterY = playerY + (panel.sizeY / 2.0);
             double ballCenterY = panel.ballY + (panel.ballSize / 2.0);
 
-            // Calcola l'Offset d'Impatto (da -sizeY/2 a +sizeY/2)
+            // Offset d'Impatto
             double offset = ballCenterY - playerCenterY;
 
-            // Calcola il fattore di deviazione (normalizzato da -1.0 a +1.0)
+            // Fattore di Deviazione (Normalizzazione)
             double maxOffset = panel.sizeY / 2.0;
             double deviationFactor = offset / maxOffset;
 
-            // Applica la deviazione alla velocità Y, limitandola a MAX_VERTICAL_SPEED
+            // Applica la deviazione: la nuova ballSpeedY è definita solo dal punto d'impatto
             ballSpeedY = deviationFactor * MAX_VERTICAL_SPEED;
 
-            // Impedisce che la palla si "blocchi" se colpita esattamente al centro e SpeedY=0
+            // Impedisce che la palla abbia una velocità verticale troppo bassa
             if (Math.abs(ballSpeedY) < 1.0) {
-                 ballSpeedY = ballSpeedY > 0 ? 1.0 : -1.0;
+                ballSpeedY = deviationFactor > 0 ? 1.0 : -1.0;
             }
+
+            // Sposta la palla per evitare che si incastri (opzionale, ma consigliato)
+            panel.ballX += ballSpeedX;
         }
 
         // --- Gestione del Punto (Reset al centro) ---
 
         if (panel.ballX < 0 || panel.ballX > panelWidth) {
-            // Reinizializza la pallina al centro
+            // Reinizializza la pallina al centro (Perfettamente centrata)
             panel.ballX = (panelWidth / 2) - (panel.ballSize / 2);
             panel.ballY = (panelHeight / 2) - (panel.ballSize / 2);
 
-            // Reset delle velocità (o le mantieni aumentate per una partita più difficile)
+            // Reset delle velocità iniziali
             ballSpeedX = 3.0;
             ballSpeedY = 3.0;
 
-            // Inverti la direzione in modo che l'altro giocatore inizi
+            // Inverti la direzione per far partire il servizio all'altro giocatore
             ballSpeedX = - ballSpeedX;
         }
-*
-*
-* */
+    }
+}
