@@ -4,8 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class myPanel extends JPanel {
-    int Pl1X = 100, Pl1Y = 540;
-    int Pl2X = 1820, Pl2Y = 540;
+
+    Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
+
+    int Pl1X = (int) screensize.getWidth() * 5/100, Pl1Y = (int) screensize.getHeight()/2;
+    int Pl2X = (int) screensize.getWidth() * 95/100 - 30, Pl2Y = (int) screensize.getHeight()/2;
 
     int ballSize = 30;
     int ballX = 960 - ballSize / 2, ballY = 540;
