@@ -12,6 +12,7 @@ public class Main {
         myPanel panel = new myPanel();
         Data data = new Data();
         Logic logic = new Logic(panel, data);
+        panel.setData(data);
 
         myFrame.add(panel);
         myFrame.setResizable(false);

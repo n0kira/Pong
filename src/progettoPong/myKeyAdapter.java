@@ -5,7 +5,7 @@ import java.awt.event.KeyEvent;
 
 public class myKeyAdapter extends KeyAdapter {
 
-    private Data data;
+    private final Data data;
 
     public myKeyAdapter(Data data) {
         this.data = data;
@@ -15,34 +15,34 @@ public class myKeyAdapter extends KeyAdapter {
     public void keyPressed(KeyEvent e) {
 
         if (e.getKeyCode() == KeyEvent.VK_W) {
-            data.isL1Up = true;
+            data.isP1Up = true;
         }
         if (e.getKeyCode() == KeyEvent.VK_S) {
-            data.isL1Down = true;
+            data.isP1Down = true;
         }
 
         if (e.getKeyCode() == KeyEvent.VK_UP) {
-            data.isL2Up = true;
+            data.isP2Up = true;
         }
         if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            data.isL2Down = true;
+            data.isP2Down = true;
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_W) {
-            data.isL1Up = false;
+            data.isP1Up = false;
         }
         if (e.getKeyCode() == KeyEvent.VK_S) {
-            data.isL1Down = false;
+            data.isP1Down = false;
         }
 
         if (e.getKeyCode() == KeyEvent.VK_UP) {
-            data.isL2Up = false;
+            data.isP2Up = false;
         }
         if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            data.isL2Down = false;
+            data.isP2Down = false;
         }
     }
 }
