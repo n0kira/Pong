@@ -16,8 +16,8 @@ public class Logic {
         this.data = data;
 
         SwingUtilities.invokeLater(panel::requestFocus);
-
         panel.setFocusable(true);
+
         panel.addKeyListener(new myKeyAdapter(data));
 
         Timer timer = new Timer(5, e -> {

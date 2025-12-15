@@ -8,6 +8,7 @@ public class Main {
         JFrame myFrame = new JFrame("PONG :D");
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        myFrame.setResizable(true);
 
         myPanel panel = new myPanel();
         Data data = new Data();
@@ -15,7 +16,6 @@ public class Main {
         panel.setData(data);
 
         myFrame.add(panel);
-        myFrame.setResizable(false);
         myFrame.setVisible(true);
     }
 }
