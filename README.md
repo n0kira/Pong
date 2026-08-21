@@ -1,6 +1,6 @@
 # 🏓 Pong
 
-Una rivisitazione del classico videogioco **Pong**, sviluppata in Java come progetto scolastico, in coppia con un compagno di classe. [@n0kira](https://github.com/nomeutente)
+Una rivisitazione del classico videogioco **Pong**, sviluppata in Java come progetto scolastico, in coppia con un compagno di classe. [@n0kira](https://github.com/n0kira)
 
 ## 📖 Descrizione
 
