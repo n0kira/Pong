@@ -6,7 +6,9 @@ Una rivisitazione del classico videogioco **Pong**, sviluppata in Java come prog
 
 Il progetto ricrea il gameplay originale di Pong: due racchette controllate dai giocatori si sfidano a colpire una pallina che rimbalza sullo schermo, con l'obiettivo di far segnare punti mandando la pallina oltre la racchetta avversaria.
 
-![Gameplay del Pong](assets/pong-video.gif)
+<p align="center">
+  <img src="assets/pong-video.gif" width="400">
+</p>
 
 ## 🛠️ Tecnologie
 
